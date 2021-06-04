@@ -1,9 +1,13 @@
 import React from 'react';
+import { isLoggedInVar } from '../apollo';
 
 const Login = () => {
   return (<div>
-    You need Login
-  </div>);
+    <h1>
+      You need Login
+    </h1>
+    <button onClick={() => isLoggedInVar(true)}>Login in now!</button>
+  </div>)
 }
 
 export default Login;
