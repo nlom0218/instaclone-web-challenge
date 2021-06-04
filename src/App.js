@@ -3,19 +3,25 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import Home from "./screens/Home";
 import Login from "./screens/Login";
 import NotFound from "./screens/NotFound";
-import { isLoggedInVar } from "./apollo"
+import { isLoggedInVar, darkModeVar } from "./apollo"
+import { ThemeProvider } from "styled-components";
+import { darkTheme, GlobalStyles, ligthTheme } from "./styles";
 
 function App() {
   const isLoggedIn = useReactiveVar(isLoggedInVar)
+  const darkMode = useReactiveVar(darkModeVar)
   return (
-    <Router>
-      <Switch>
-        <Route exact path="/">
-          {isLoggedIn ? <Home /> : <Login />}
-        </Route>
-        <Route><NotFound /></Route>
-      </Switch>
-    </Router>
+    <ThemeProvider theme={darkMode ? darkTheme : ligthTheme}>
+      <GlobalStyles />
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            {isLoggedIn ? <Home /> : <Login />}
+          </Route>
+          <Route><NotFound /></Route>
+        </Switch>
+      </Router>
+    </ThemeProvider>
   );
 }
 

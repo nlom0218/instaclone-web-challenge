@@ -4,8 +4,8 @@
 
 - [x] Router
 - [x] Authentication
-- [ ] Arch
-- [ ] Styles
+- [x] Arch
+- [x] Styles
 
 - [ ] Log In / Sign Up
 - [ ] Feed
