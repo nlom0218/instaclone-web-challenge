@@ -3,7 +3,7 @@ import reset from "styled-reset"
 
 export const ligthTheme = {
   fontColor: "#2c2c2c",
-  bgColor: "white",
+  bgColor: "#FCFBFC",
 
   accent: "#0095f6",
   borderColor: "rgb(219, 219, 219)"

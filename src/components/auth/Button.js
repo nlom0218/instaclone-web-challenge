@@ -1,7 +1,7 @@
-import React from 'react';
+
 import styled from 'styled-components';
 
-const SButton = styled.input`
+const Button = styled.input`
   border: none;
   margin-top: 12px;
   background-color: ${props => props.theme.accent};
@@ -13,8 +13,5 @@ const SButton = styled.input`
   border-radius: 3px;
 `
 
-const Button = (props) => {
-  return (<SButton {...props} />);
-}
 
 export default Button;
