@@ -10,6 +10,8 @@ import Separator from '../components/auth/Separator';
 import routes from '../routes';
 import styled from 'styled-components';
 import { FatLink } from '../components/shared';
+import { Helmet } from 'react-helmet-async';
+import PageTitle from '../components/PageTitle';
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -26,6 +28,7 @@ const SubTitle = styled(FatLink)`
 
 const SingUp = () => {
   return (<AuthLayout>
+    <PageTitle title="Sign up" />
     <FormBox>
       <HeaderContainer>
         <FontAwesomeIcon icon={faInstagram} size="3x" />
