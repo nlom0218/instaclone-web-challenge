@@ -3,19 +3,34 @@ import reset from "styled-reset"
 
 export const ligthTheme = {
   fontColor: "#2c2c2c",
-  bgColor: "lightgray"
+  bgColor: "white",
+
+  accent: "#0095f6",
+  borderColor: "rgb(219, 219, 219)"
 }
 
 export const darkTheme = {
-  fontColor: "lightgray",
+  fontColor: "white",
   bgColor: "#2c2c2c"
 }
 
 export const GlobalStyles = createGlobalStyle`
   ${reset}
+  input {
+    all: unset;
+    box-sizing: border-box;
+  }
+  * {
+    box-sizing: border-box;
+  }
   body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: ${props => props.theme.fontColor};
-    background-color: ${props => props.theme.bgColor}
+    background-color: ${props => props.theme.bgColor};
+    font-size: 14px;
+    color: rgb(38, 38, 38);
+  }
+  a {
+    text-decoration: none;
   }
 `
