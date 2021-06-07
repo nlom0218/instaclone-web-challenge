@@ -7,6 +7,7 @@ import { isLoggedInVar, darkModeVar } from "./apollo"
 import { ThemeProvider } from "styled-components";
 import { darkTheme, GlobalStyles, ligthTheme } from "./styles";
 import SingUp from "./screens/SingUp";
+import routes from "./routes";
 
 function App() {
   const isLoggedIn = useReactiveVar(isLoggedInVar)
@@ -16,10 +17,10 @@ function App() {
       <GlobalStyles />
       <Router>
         <Switch>
-          <Route exact path="/">
+          <Route exact path={routes.home}>
             {isLoggedIn ? <Home /> : <Login />}
           </Route>
-          {!isLoggedIn ? <Route path="/sign-up"><SingUp /></Route> : null}
+          {!isLoggedIn ? <Route path={routes.signUp}><SingUp /></Route> : null}
           <Route><NotFound /></Route>
         </Switch>
       </Router>
