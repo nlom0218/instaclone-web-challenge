@@ -10,6 +10,9 @@ import Separator from '../components/auth/Separator';
 import BottomBox from '../components/auth/BottomBox';
 import routes from '../routes';
 import PageTitle from '../components/PageTitle';
+import { useForm } from "react-hook-form";
+import FormError from '../components/auth/FormError';
+import { gql, useMutation } from '@apollo/client';
 
 const FacebookLogin = styled.div`
   color: #385285;
@@ -19,17 +22,67 @@ const FacebookLogin = styled.div`
   }
 `
 
+const LOGIN_MUTATION = gql`
+  mutation login($username: String!, $password: String!) {
+    login(username:$username, password:$password) {
+      ok
+      token
+      error
+    }
+  }
+`
+
 const Login = () => {
+  const { register, watch, handleSubmit, formState: { errors, isValid }, getValues, setError } = useForm({
+    mode: "onChange"
+  })
+  const onCompleted = (data) => {
+    const { login: { ok, error, token } } = data
+    if (!ok) {
+      setError("result", {
+        message: error
+      })
+    }
+  }
+  const [login, { loading }] = useMutation(LOGIN_MUTATION, {
+    onCompleted
+  })
+  console.log(errors);
+  const onSubmitValid = (data) => {
+    if (loading) {
+      return
+    }
+    const { username, password } = getValues()
+    login({
+      variables: { username, password }
+    })
+  }
   return (<AuthLayout>
     <PageTitle title="Login" />
     <FormBox>
       <div>
         <FontAwesomeIcon icon={faInstagram} size="3x" />
       </div>
-      <form>
-        <Input type="text" placeholder="Username" />
-        <Input type="password" placeholder="Password" />
-        <Button type="submit" value="Log In" />
+      <form onSubmit={handleSubmit(onSubmitValid)}>
+        <Input
+          {...register("username", {
+            required: "Username is required.",
+            minLength: {
+              value: 5,
+              message: "Usernmae should be longer than 5 chars."
+            }
+          })}
+          type="text" placeholder="Username" autoComplete="off" hasError={Boolean(errors?.username?.message)} />
+        <FormError message={errors?.username?.message} />
+        <Input
+          {...register("password", {
+            required: "Password is required."
+          }
+          )}
+          type="password" placeholder="Password" autoComplete="off" hasError={Boolean(errors?.password?.message)} />
+        <FormError message={errors?.password?.message} />
+        <Button type="submit" value={loading ? "Loading..." : "Log in"} disabled={!isValid || loading} />
+        <FormError message={errors?.result?.message} />
       </form>
       <Separator />
       <FacebookLogin>
