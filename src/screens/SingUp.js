@@ -15,7 +15,7 @@ import PageTitle from '../components/PageTitle';
 import { useForm } from 'react-hook-form';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/client';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -54,16 +54,17 @@ const CREATE_ACCOUNT_MUTATAION = gql`
 const SingUp = () => {
   const history = useHistory()
   const onCompleted = (data) => {
+    const { username, password } = getValues()
     const { createAccount: { ok, error } } = data
     if (!ok) {
       return
     }
-    history.push(routes.home, { message: "Account created. Please log in." })
+    history.push(routes.home, { message: "Account created. Please log in.", username, password })
   }
   const [createAccuton, { loading }] = useMutation(CREATE_ACCOUNT_MUTATAION, {
     onCompleted
   })
-  const { register, handleSubmit, formState: { errors, isValid } } = useForm({
+  const { register, handleSubmit, formState: { errors, isValid }, getValues } = useForm({
     mode: "onChange"
   })
   const onSubmitVaild = (data) => {
